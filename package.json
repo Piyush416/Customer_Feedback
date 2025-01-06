@@ -1,0 +1,15 @@
+{
+  "name": "customerfeedback",
+  "version": "1.0.0",
+  "description": "Customer FeedBack Project ",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "customerfeedback": "file:",
+    "express": "^4.21.2"
+  }
+}
