@@ -1,0 +1,27 @@
+ul
+{
+    display: flex;
+    justify-content: space-evenly;
+    list-style-type: none;
+    background-color: #080d06;
+}
+
+li 
+{
+    font-size: 1.5rem;
+    margin: 15px;
+}
+
+li > a
+{
+    text-decoration: none;
+    color: white;
+    padding: 15px;
+}
+
+.active-link
+{
+    border: 2px solid black;
+    border-radius: 5px;
+    background-color: #111f1f;
+}
