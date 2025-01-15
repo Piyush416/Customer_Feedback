@@ -12,7 +12,7 @@ body {
   color: white;
   text-align: center;
   padding: 40px 0;
-  border-bottom: 5px solid  rgb(21, 101, 192);
+  border-bottom: 5px solid rgb(21, 101, 192);
   position: relative;
 }
 
@@ -29,6 +29,18 @@ body {
   right: 20px;
   top: 50%;
   transform: translateY(-50%);
+}
+
+.warning {
+  background-color: white;
+  padding: 5px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.warning > a {
+  color: red;
+  font-size: 1.5em;
 }
 
 .auth-buttons button {

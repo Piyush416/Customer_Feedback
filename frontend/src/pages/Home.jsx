@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './Home.css';
+import { Link } from 'react-router-dom'
+
+const PORT = 5000;
 
 const Home = () => {
   const [faculties, setFaculties] = useState([]);
@@ -10,18 +13,31 @@ const Home = () => {
   const [feedbacks, setFeedbacks] = useState({});
   const [showModal, setShowModal] = useState(false);
 
+  const [isFeedBack, setFeedBack] = useState(false)
+
+
+
+
+  const token = localStorage.getItem("token");
+
   useEffect(() => {
     fetch('http://localhost:5000/api/faculty')
       .then((response) => response.json())
       .then((data) => {
         setFaculties(data);
         setFilteredFaculties(data);
-
         const uniqueSubjects = [...new Set(data.map(faculty => faculty.subject))];
         setSubjects(['All', ...uniqueSubjects]);
+        (token) ? setFeedBack(true) : setFeedBack(false);
+        if (token) {
+          setFeedBack(true);
+        } else {
+          setFeedBack(false);
+        }
       })
       .catch((error) => console.error("Error fetching faculty data: ", error));
   }, []);
+
 
   const handleFilterChange = (subject) => {
     setSelectedSubject(subject);
@@ -31,6 +47,7 @@ const Home = () => {
       setFilteredFaculties(faculties.filter(faculty => faculty.subject === subject));
     }
   };
+
 
   const handleStarClick = (facultyId, rating) => {
     setRatings((prevRatings) => ({ ...prevRatings, [facultyId]: rating }));
@@ -59,18 +76,21 @@ const Home = () => {
   const handleFeedbackSubmit = (facultyId) => {
     const feedbackText = feedbacks[facultyId];
     if (!feedbackText) return;
-
     setShowModal(true);
     setFeedbacks((prevFeedbacks) => ({ ...prevFeedbacks, [facultyId]: "" }));
-
     setTimeout(() => setShowModal(false), 1000);
   };
+
 
   return (
     <div className="home-container">
       <header className="header">
         <h1>Faculty Feedback System</h1>
       </header>
+
+
+      {(isFeedBack) ? "" : <p className='warning'><Link to="/login">Login to submit FeedBack</Link></p>}
+
 
       <div className="content">
         <div className="filter-container">
@@ -105,7 +125,8 @@ const Home = () => {
                     <div>{renderStars(faculty._id, 3)}</div>
                   </div>
 
-                  <div className="feedback-section">
+                  {/* submit feedback toggle*/}
+                  {(isFeedBack) ? <div className="feedback-section">
                     <textarea
                       value={feedbacks[faculty._id] || ''}
                       onChange={(event) => handleFeedbackChange(faculty._id, event)}
@@ -114,12 +135,12 @@ const Home = () => {
                       className="feedback-input"
                     />
                     <button
-                      onClick={() => handleFeedbackSubmit(faculty._id)}
-                      className="submit-feedback"
-                    >
+                      onClick={() => handleFeedbackSubmit(faculty._id, faculty.name)}
+                      className="submit-feedback">
                       Submit Feedback
                     </button>
-                  </div>
+                  </div> : ""}
+
                 </div>
               </div>
             </>
