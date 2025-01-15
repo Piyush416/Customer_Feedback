@@ -120,8 +120,15 @@ app.post("/user/login", async (req, res) => {
 
 
 // handle feedback
-app.post('/user/feedback', (req, res) => {
-    const {facultyId, facultyName} = req.body
+app.post('/user/feedback', async (req, res) => {
+    try {
+        const { facultyId, facultyName, feedbackText, enrollment } = req.body
+        const newfeedback = await new feedbackModel({ facultyId, facultyName, FeedBackEnrol: enrollment, feedback: feedbackText })
+        await newfeedback.save();
+        res.status(201).json({ message: "FeedBack Submitted SuccessFully" })
+    } catch {
+        res.status(500).json({ message: "Error to Submit FeedBack" })
+    }
 })
 
 

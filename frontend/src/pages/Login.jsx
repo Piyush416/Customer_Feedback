@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import './Login.css'
 
-import {useNavigate} from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 // Backend port 
 const PORT = 5000;
@@ -23,7 +23,8 @@ const Login = () => {
 
         const resp = await response.json();
         if (response.ok) {
-            localStorage.setItem("token", resp.token)
+            localStorage.setItem("token", resp.token);
+            localStorage.setItem("enrollment", enrollment);
             navigate("/")
         } else {
             alert(resp.message)
