@@ -31,13 +31,13 @@ The **Faculty Feedback System** is a web application that allows students to pro
 Here are some screenshots of the application:
 
 ### Registration Page:
-![Registration Page](frontend/src/assets/images/registration-page.png)
+![Registration Page](frontend/src/images/assets/images/registration-page.png)
 
 ### Login Page:
-![Login Page](frontend/src/assets/images/login-page.png)
+![Login Page](frontend/src/images/assets/images/login-page.png)
 
 ### Home Page:
-![Home Page](frontend/src/assets/images/home-page.png)
+![Home Page](frontend/src/images/assets/images/home-page.png)
 
 ### Installation
 
