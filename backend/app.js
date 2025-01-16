@@ -5,12 +5,15 @@ const cors = require('cors');
 const app = express();
 const PORT = 5000;
 
+
+
 // json web token
 const jwt = require('jsonwebtoken')
 const JWT_SECRET = 'jkblhvjkgchfx4356789hjvkgchjfxgd@#$%^'
 
 app.use(cors());
 app.use(express.json());
+
 
 const MONGO_URL = "mongodb+srv://piyush:1234@integration.4meth.mongodb.net/feedback?retryWrites=true&w=majority&appName=Integration"
 
