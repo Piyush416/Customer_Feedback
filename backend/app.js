@@ -47,13 +47,12 @@ const userModel = new mongoose.model('users', userSchema);
 
 
 // feedback store in database model
-const feedbackSchema = new mongoose.Schema(
-    {
-        facultyID: Number,
-        facultyName: String,
-        FeedBackEnrol: Number,
-        feedback: String,
-    })
+const feedbackSchema = new mongoose.Schema({
+    facultyID: Number,
+    facultyName: String,
+    FeedBackEnrol: Number,
+    feedback: String,
+})
 const feedbackModel = new mongoose.model('feedbacks', feedbackSchema);
 
 
