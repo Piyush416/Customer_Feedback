@@ -17,6 +17,7 @@ const Header = () => {
   const handleLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('enrollment')
+    navigate('/')
   }
 
   return (
@@ -40,7 +41,6 @@ const Header = () => {
             </li>
           </>) : (<li>
             <NavLink to="/login" onClick={handleLogout}>Logout</NavLink>
-            {navigate("/")}
           </li>)
           }
         </ul>

@@ -22,11 +22,9 @@ main {
 }
 
 .blurContainer {
-    /* border: 2px solid rgb(112, 106, 107); */
     border: 1px solid rgba(255, 255, 255, 0.911);
     border: 1px solid black;
     width: 500px;
-    /* height: 500px; */
     backdrop-filter: blur(10px);
     border-radius: 10px;
     box-shadow: 10px 10px 100px rgba(255, 255, 255, 0.911);
