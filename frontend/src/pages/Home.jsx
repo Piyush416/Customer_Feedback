@@ -2,24 +2,27 @@ import React, { useState, useEffect } from 'react';
 import './Home.css';
 import { Link } from 'react-router-dom'
 
-const PORT = 5000;
 
 const Home = () => {
+  const PORT = import.meta.env.VITE_API_PORT
+
   const [faculties, setFaculties] = useState([]);
+  const [feedbackfaculties, setFeedBackFaculties] = useState([]);
   const [filteredFaculties, setFilteredFaculties] = useState([]);
   const [subjects, setSubjects] = useState([]);
   const [selectedSubject, setSelectedSubject] = useState('All');
   const [ratings, setRatings] = useState({});
   const [feedbacks, setFeedbacks] = useState({});
   const [showModal, setShowModal] = useState(false);
-
   const [isFeedBack, setFeedBack] = useState(false)
 
 
   const token = localStorage.getItem("token");
+  const enrollment = localStorage.getItem("enrollment");
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/faculty')
+    const faculty_api = import.meta.env.VITE_API
+    fetch(faculty_api)
       .then((response) => response.json())
       .then((data) => {
         setFaculties(data);
@@ -34,6 +37,18 @@ const Home = () => {
         }
       })
       .catch((error) => console.error("Error fetching faculty data: ", error));
+
+    // if (enrollment && token) {
+    //   fetch(`${faculty_api}/enrollment`, {
+    //     method: "POST",
+    //     headers: { 'Content-Type': 'application/json' },
+    //     body: JSON.stringify({ enrollment })
+    //   })
+    //     .then((response) => response.json())
+    //     .then(data => console.log(data.message)
+    //     )
+    // }
+
   }, []);
 
 
@@ -64,6 +79,7 @@ const Home = () => {
     ));
   };
 
+
   const handleFeedbackChange = (facultyId, event) => {
     setFeedbacks((prevFeedbacks) => ({
       ...prevFeedbacks,
@@ -72,11 +88,12 @@ const Home = () => {
   };
 
 
-  const handleFeedbackSubmit = async (facultyId, facultyName, index) => {
+  const handleFeedbackSubmit = async (facultyId, facultyName) => {
     const feedbackText = feedbacks[facultyId];
     if (!feedbackText) return;
     const enrollment = localStorage.getItem("enrollment");
-    const resp = await fetch(`http://localhost:${PORT}/user/feedback`, {
+    const feedback_api = import.meta.env.VITE_FEEDBACK_API
+    const resp = await fetch(feedback_api, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ facultyId, facultyName, feedbackText, enrollment })
@@ -120,8 +137,8 @@ const Home = () => {
         <div className="faculty-cards">
           {filteredFaculties.map((faculty, index) => (
             <>
-            
-              <div key={index} className="faculty-card">
+
+              <div key={index} id={index} className="faculty-card">
                 <img
                   src={faculty.image || 'https://via.placeholder.com/150'}
                   alt={faculty.name}

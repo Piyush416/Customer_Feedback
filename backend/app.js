@@ -1,21 +1,22 @@
+require('dotenv').config()     // load .env file
 const express = require('express');
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt')
 const cors = require('cors');
 const app = express();
-const PORT = 5000;
+const PORT = process.env.PORT;
 
 
 
 // json web token
 const jwt = require('jsonwebtoken')
-const JWT_SECRET = 'jkblhvjkgchfx4356789hjvkgchjfxgd@#$%^'
+const JWT_SECRET = process.env.JWT_SECRET_CODE
 
 app.use(cors());
 app.use(express.json());
 
 
-const MONGO_URL = "mongodb+srv://piyush:1234@integration.4meth.mongodb.net/feedback?retryWrites=true&w=majority&appName=Integration"
+const MONGO_URL = process.env.MONGO_URI
 
 mongoose.connect(MONGO_URL).then(() => {
     console.log("MongoDb connection Est.");
@@ -50,15 +51,14 @@ const userModel = new mongoose.model('users', userSchema);
 
 
 // feedback store in database model
+const { Schema } = mongoose
 const feedbackSchema = new mongoose.Schema({
-    facultyID: Number,
     facultyName: String,
     FeedBackEnrol: Number,
     feedback: String,
+    facultyObjectId: Schema.Types.ObjectId
 })
 const feedbackModel = new mongoose.model('feedbacks', feedbackSchema);
-
-
 
 
 
@@ -125,7 +125,7 @@ app.post("/user/login", async (req, res) => {
 app.post('/user/feedback', async (req, res) => {
     try {
         const { facultyId, facultyName, feedbackText, enrollment } = req.body
-        const newfeedback = await new feedbackModel({ facultyId, facultyName, FeedBackEnrol: enrollment, feedback: feedbackText })
+        const newfeedback = await new feedbackModel({ facultyObjectId: facultyId, facultyName, FeedBackEnrol: enrollment, feedback: feedbackText })
         await newfeedback.save();
         res.status(201).json({ message: "FeedBack Submitted SuccessFully" })
     } catch {
@@ -133,6 +133,17 @@ app.post('/user/feedback', async (req, res) => {
     }
 })
 
+
+app.post('/api/faculty/enrollment', async (req, res) => {
+    const { enrollment } = req.body;
+    try {
+        const faculties = await FacultyModel.find();
+        res.json(faculties);
+    } catch (err) {
+        res.status(500).send('Error fetching data');
+    }
+    res.status(201).json({ message: "Success" })
+})
 
 
 app.listen(PORT, () => {
