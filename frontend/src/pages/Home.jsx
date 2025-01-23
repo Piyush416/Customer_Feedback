@@ -22,7 +22,7 @@ const Home = () => {
 
   useEffect(() => {
     const faculty_api = import.meta.env.VITE_API
-    fetch("http://localhost:5000/api/faculty")
+    fetch("https://customer-feedback-f5do.onrender.com/api/faculty")
       .then((response) => response.json())
       .then((data) => {
         setFaculties(data);
