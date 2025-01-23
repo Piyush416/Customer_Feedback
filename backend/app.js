@@ -5,6 +5,7 @@ const bcrypt = require('bcrypt')
 const cors = require('cors');
 const app = express();
 const PORT = process.env.PORT;
+const path = require("path")
 
 
 
@@ -12,6 +13,8 @@ const PORT = process.env.PORT;
 const jwt = require('jsonwebtoken')
 const JWT_SECRET = process.env.JWT_SECRET_CODE
 
+
+app.use(express.static(path.join(__dirname, '/dist')))
 app.use(cors());
 app.use(express.json());
 
@@ -144,6 +147,12 @@ app.post('/api/faculty/enrollment', async (req, res) => {
     }
     res.status(201).json({ message: "Success" })
 })
+
+
+// Catch-all route for React
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../frontend/dist/index.html'));
+});
 
 
 app.listen(PORT, () => {
