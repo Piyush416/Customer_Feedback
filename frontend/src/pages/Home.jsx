@@ -22,7 +22,7 @@ const Home = () => {
 
   useEffect(() => {
     const faculty_api = import.meta.env.VITE_API
-    fetch(faculty_api)
+    fetch("http://localhost:5000/api/faculty")
       .then((response) => response.json())
       .then((data) => {
         setFaculties(data);
