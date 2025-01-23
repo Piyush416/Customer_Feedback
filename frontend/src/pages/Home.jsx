@@ -93,7 +93,7 @@ const Home = () => {
     if (!feedbackText) return;
     const enrollment = localStorage.getItem("enrollment");
     const feedback_api = import.meta.env.VITE_FEEDBACK_API
-    const resp = await fetch(feedback_api, {
+    const resp = await fetch("https://customer-feedback-f5do.onrender.com/user/feedback", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ facultyId, facultyName, feedbackText, enrollment })
