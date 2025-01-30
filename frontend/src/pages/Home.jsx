@@ -150,13 +150,13 @@ const Home = () => {
                   <p><strong>Experience:</strong> {faculty.experience}</p>
                   <p><strong>Qualification:</strong> {faculty.qualification}</p>
 
-                  <div className="star-rating">
-                    <p><strong>Rate this Faculty:</strong></p>
-                    <div>{renderStars(faculty._id, 3)}</div>
-                  </div>
-
                   {/* submit feedback toggle*/}
                   {(isFeedBack) ? <div key={index} id={index} className="feedback-section">
+                    <div className="star-rating">
+                    <p><strong>Rate this Faculty:</strong></p>
+                    <div>{renderStars(faculty._id, 3)}</div>
+                    </div>
+
                     <textarea
                       value={feedbacks[faculty._id] || ''}
                       onChange={(event) => handleFeedbackChange(faculty._id, event)}
