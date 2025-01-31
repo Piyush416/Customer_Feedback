@@ -15,9 +15,7 @@ const JWT_SECRET = process.env.JWT_SECRET_CODE
 
 
 app.use(express.static(path.join(__dirname, '/dist')))
-app.use(cors({
-    origin: "https://piyush416.github.io",
-}));
+app.use(cors());
 app.use(express.json());
 
 
